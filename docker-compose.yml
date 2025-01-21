@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  notifications-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: notifications-service
+    container_name: notifications-service
+    command: npm run start
+    volumes:
+      - ./:/app
+    ports:
+      - "3001:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+    depends_on:
+      - redis
+    networks:
+      - good-food
+
+networks:
+  good-food:
+    external: true
