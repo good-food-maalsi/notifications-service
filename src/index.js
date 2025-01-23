@@ -1,11 +1,17 @@
 const amqp = require('amqplib');
+var nodemailer = require('nodemailer');
+
+// const mailhog = require('mailhog')({
+//     host: 'mailhog'
+// })
+
 
 const queue = 'test';
 
 // Set your config here...
 let config = {
     protocol: 'amqp',
-    hostname: 'localhost',
+    hostname: 'rabbitmq',
     port: 5672,
     username: 'guest',
     password: 'guest',
@@ -13,6 +19,18 @@ let config = {
     frameMax: 0,
     heartbeat: 0,
     vhost: '/',
+};
+
+const transporter = nodemailer.createTransport({
+    host: 'mailhog',
+    port: 1025,
+});
+
+const mailOptions = {
+    from: 'test@test.test',
+    to: 'test@test.test',
+    subject: `Your subject`,
+    text: `Your text content`
 };
 
 async function start() {
@@ -55,8 +73,15 @@ function startPollingForMessages(ch) {
 }
 
 function onNewMessage(msg) {
-    // Do your database stuff or whatever here....
-    console.log("On new message:", msg.content.toString())
+    console.log(`onNewMessage: received message: ${msg.content.toString()}`);
+    transporter.sendMail(mailOptions, function (error, info) {
+        console.log('sendMail: sending email...');
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 }
 
 start();
