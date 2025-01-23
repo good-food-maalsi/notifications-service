@@ -1,4 +1,6 @@
 const express = require("express");
+const amqp = require('amqplib');
+
 const app = express();
 
 app.get("/", function (req: any, res: any) {

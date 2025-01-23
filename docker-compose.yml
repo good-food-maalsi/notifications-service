@@ -20,6 +20,14 @@ services:
     networks:
       - good-food
 
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
+    networks:
+      - good-food
+
 networks:
   good-food:
     external: true

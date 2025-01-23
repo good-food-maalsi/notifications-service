@@ -2,11 +2,12 @@
   "version": "1.0.0",
   "main": "src/hotloader.js",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "amqplib": "^0.10.5",
     "express": "^4.16.2",
     "ts-node": "^10.9.2"
   },
