@@ -2,11 +2,14 @@
   "version": "1.0.0",
   "main": "src/hotloader.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.ts",
+    "consume": "nodemon src/consumer/handler.ts"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@types/amqplib": "^0.10.6",
+    "@types/nodemailer": "^6.4.17",
     "amqplib": "^0.10.5",
     "express": "^4.16.2",
     "mailhog": "^4.16.0",

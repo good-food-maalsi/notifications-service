@@ -14,10 +14,10 @@ services:
       - rabbitmq-data:/var/lib/rabbitmq
 
   caddy:
-    image: caddy
-    container_name: caddy
+    image: nginx:1-alpine
+    container_name: nginx
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./nginx-global.conf:/etc/nginx/nginx.conf
     ports:
       - "80:80"
     networks:

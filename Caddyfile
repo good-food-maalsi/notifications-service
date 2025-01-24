@@ -1,5 +1,0 @@
-127.0.0.1 {
-    reverse_proxy /notifications notifications-service:80
-    reverse_proxy /commands commands-service:80
-    reverse_proxy /catalog catalog-service:80
-}
