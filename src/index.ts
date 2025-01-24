@@ -1,5 +1,4 @@
 const express = require("express");
-const amqp = require('amqplib');
 
 const app = express();
 
