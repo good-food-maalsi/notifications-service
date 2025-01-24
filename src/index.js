@@ -5,7 +5,6 @@ var nodemailer = require('nodemailer');
 //     host: 'mailhog'
 // })
 
-
 const queue = 'test';
 
 // Set your config here...
@@ -20,6 +19,18 @@ let config = {
     heartbeat: 0,
     vhost: '/',
 };
+
+const express = require('express');
+const app = express();
+
+app.get('/notification', (req, res) => {
+    res.send('Hello');
+});
+
+app.listen(process.env.PORT, () => {
+    console.log(`Listening on port ${process.env.PORT}`);
+});
+
 
 const transporter = nodemailer.createTransport({
     host: 'mailhog',

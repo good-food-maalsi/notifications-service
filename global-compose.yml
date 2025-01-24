@@ -13,6 +13,16 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
+  caddy:
+    image: caddy
+    container_name: caddy
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "80:80"
+    networks:
+      - good-food
+
 networks:
   good-food:
     external: true
