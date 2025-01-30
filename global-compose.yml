@@ -1,5 +1,3 @@
-version: "3.7"
-
 name: good-food
 services:
   rabbitmq:
@@ -13,7 +11,7 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
-  caddy:
+  nginx:
     image: nginx:1-alpine
     container_name: nginx
     volumes:

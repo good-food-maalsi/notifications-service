@@ -1,8 +1,10 @@
 import {ConsumeMessage} from "amqplib";
 import {Transporter} from "../config/mail";
+
 export default class MailValidationConsumer {
 
     public queue = "MailValidationQueue";
+
     public onNewMessage(msg: ConsumeMessage | null): void {
         console.log(`onNewMessage: received message: ${msg.content.toString()}`);
 
@@ -17,7 +19,18 @@ export default class MailValidationConsumer {
             from: 'contact@good-food.fr',
             to: mailValidationMessage.email,
             subject: `Your subject`,
-            text: `Button : ` + mailValidationMessage.magicToken,
+            templateLayoutName: "MailValidationLayout",
+            templateLayoutSlots: {
+                header: "partials/header",
+                footer: "partials/footer",
+            },
+            templateData: {
+                content: {
+                    imageURL: "http://5vph.mj.am/img/5vph/b/1g8pi/068ys.png",
+                    magicToken: mailValidationMessage.magicToken,
+                    username: mailValidationMessage.username,
+                }
+            }
         };
 
         Transporter.sendMail(mailOptions, function (error, info) {
@@ -34,6 +47,6 @@ export default class MailValidationConsumer {
 
 interface MailValidationMessageInterface {
     username: string,
-    email:string,
+    email: string,
     magicToken: string,
 }
