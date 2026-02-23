@@ -5,4 +5,5 @@ COPY package.json package-lock.json ./
 RUN npm ci --production
 COPY . .
 EXPOSE 8080
-CMD ["npm", "run", "start"]
+# Run both the Express server and the RabbitMQ consumer
+CMD ["sh", "-c", "npx ts-node src/consumer/handler.ts & npx ts-node src/index.ts"]
