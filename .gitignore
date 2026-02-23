@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 volumes
 .idea
 # Kubernetes secrets (applied manually, not via ArgoCD)
