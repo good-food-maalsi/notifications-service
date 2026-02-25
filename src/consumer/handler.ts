@@ -77,7 +77,7 @@ function startPollingForMessages(ch: amqp.Channel, consumer: ConsumerInterface):
     ).then(() => {});
 }
 
-async function startConsumers(connection: amqp.Connection): Promise<void> {
+async function startConsumers(connection: amqp.ChannelModel): Promise<void> {
     for (const consumer of Consumers) {
         const channel = await connection.createChannel();
         await channel.assertQueue(consumer.queue, { durable: true });
