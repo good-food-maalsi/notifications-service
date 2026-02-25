@@ -28,10 +28,10 @@ spec:
                       - containerPort: 8080
                   resources:
                       requests:
-                          memory: "32Mi"
+                          memory: "128Mi"
                           cpu: "10m"
                       limits:
-                          memory: "64Mi"
+                          memory: "256Mi"
                           cpu: "100m"
                   envFrom:
                       - configMapRef:
@@ -67,10 +67,10 @@ spec:
                       - npx ts-node src/consumer/handler.ts
                   resources:
                       requests:
-                          memory: "32Mi"
+                          memory: "128Mi"
                           cpu: "10m"
                       limits:
-                          memory: "64Mi"
+                          memory: "256Mi"
                           cpu: "100m"
                   envFrom:
                       - configMapRef:
