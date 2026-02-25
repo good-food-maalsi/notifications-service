@@ -19,7 +19,7 @@ spec:
                 - name: scw-registry-secret
             containers:
                 - name: notifications-service
-                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:7f601ca8ac73c2fbfbef95aeae6606cca8b05a3f
+                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:27cf9d7d87ed6bfa81edacb3d54a7baed22674bc
                   imagePullPolicy: Always
                   command: ["/bin/sh", "-c"]
                   args:
@@ -60,7 +60,7 @@ spec:
                 - name: scw-registry-secret
             containers:
                 - name: notifications-consumer
-                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:136cd169ae09374384e11359b4e8f5e65c7d5206
+                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:27cf9d7d87ed6bfa81edacb3d54a7baed22674bc
                   imagePullPolicy: Always
                   command: ["/bin/sh", "-c"]
                   args:
