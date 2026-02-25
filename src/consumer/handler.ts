@@ -1,5 +1,5 @@
-import * as amqp from 'amqplib';
-import {ConsumerInterface, Consumers} from "./Queues";
+import * as amqp from "amqplib";
+import { ConsumerInterface, Consumers } from "./Queues";
 
 interface amqpConfig {
     vhost: string;
@@ -10,19 +10,19 @@ interface amqpConfig {
     port: number;
     heartbeat: number;
     locale: string;
-    username: string
+    username: string;
 }
 
 let config: amqpConfig = {
-    protocol: 'amqp',
-    hostname: 'rabbitmq',
-    port: 5672,
-    username: 'guest',
-    password: 'guest',
-    locale: 'en_US',
+    protocol: "amqp",
+    hostname: process.env.RABBITMQ_HOST || "localhost",
+    port: parseInt(process.env.RABBITMQ_PORT || "5672"),
+    username: process.env.RABBITMQ_USER || "guest",
+    password: process.env.RABBITMQ_PASSWORD || "guest",
+    locale: "en_US",
     frameMax: 0,
     heartbeat: 0,
-    vhost: '/',
+    vhost: "/",
 };
 
 function handle() {
@@ -32,10 +32,9 @@ function handle() {
 
             for (const consumer of Consumers) {
                 let channel = await conn.createChannel();
-                await channel.assertQueue(consumer.queue, {durable: true});
+                await channel.assertQueue(consumer.queue, { durable: true });
                 startPollingForMessages(channel, consumer);
             }
-
         } catch (err) {
             console.error("start: Connection error:", err.message);
         }
@@ -43,7 +42,6 @@ function handle() {
 
     start();
 }
-
 
 async function createConnection(config: amqpConfig) {
     const conn = await amqp.connect(config);
@@ -64,12 +62,14 @@ async function createConnection(config: amqpConfig) {
 //     return channel.sendToQueue(queue, Buffer.from(messageContent))
 // }
 
-function startPollingForMessages(ch: amqp.Channel, consumer: ConsumerInterface) {
+function startPollingForMessages(
+    ch: amqp.Channel,
+    consumer: ConsumerInterface,
+) {
     ch.consume(consumer.queue, (msg) => {
         consumer.consume(msg);
         ch.ack(msg);
-    }).then(() => {
-    });
+    }).then(() => {});
 }
 
 handle();

@@ -33,6 +33,8 @@ spec:
                   envFrom:
                       - configMapRef:
                             name: notifications-service-config
+                      - secretRef:
+                            name: rabbitmq-secret
 ---
 apiVersion: v1
 kind: Service
