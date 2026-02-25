@@ -21,8 +21,50 @@ spec:
                 - name: notifications-service
                   image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:7f601ca8ac73c2fbfbef95aeae6606cca8b05a3f
                   imagePullPolicy: Always
+                  command: ["/bin/sh", "-c"]
+                  args:
+                      - npx ts-node src/index.ts
                   ports:
                       - containerPort: 8080
+                  resources:
+                      requests:
+                          memory: "32Mi"
+                          cpu: "10m"
+                      limits:
+                          memory: "64Mi"
+                          cpu: "100m"
+                  envFrom:
+                      - configMapRef:
+                            name: notifications-service-config
+                      - secretRef:
+                            name: rabbitmq-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: notifications-consumer
+    labels:
+        app: notifications-consumer
+spec:
+    replicas: 1
+    revisionHistoryLimit: 3
+    selector:
+        matchLabels:
+            app: notifications-consumer
+    template:
+        metadata:
+            labels:
+                app: notifications-consumer
+        spec:
+            imagePullSecrets:
+                - name: scw-registry-secret
+            containers:
+                - name: notifications-consumer
+                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:136cd169ae09374384e11359b4e8f5e65c7d5206
+                  imagePullPolicy: Always
+                  command: ["/bin/sh", "-c"]
+                  args:
+                      - npx ts-node src/consumer/handler.ts
                   resources:
                       requests:
                           memory: "32Mi"
@@ -55,3 +97,7 @@ metadata:
 data:
     NODE_ENV: "production"
     PORT: "8080"
+    RABBITMQ_HOST: "rabbitmq"
+    RABBITMQ_PORT: "5672"
+    REDIS_HOST: "redis"
+    REDIS_PORT: "6379"

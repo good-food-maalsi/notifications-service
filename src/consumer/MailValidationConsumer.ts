@@ -5,14 +5,14 @@ export default class MailValidationConsumer {
     public queue = "MailValidationQueue";
 
     public onNewMessage(msg: ConsumeMessage | null): void {
-        console.log(
-            `onNewMessage: received message: ${msg.content.toString()}`,
-        );
-
         if (!msg) {
             console.log("onNewMessage: message is null");
             return;
         }
+
+        console.log(
+            `onNewMessage: received message: ${msg.content.toString()}`,
+        );
 
         const mailValidationMessage = JSON.parse(
             msg.content.toString(),
