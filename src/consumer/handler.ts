@@ -89,9 +89,11 @@ async function startConsumers(connection: amqp.ChannelModel): Promise<void> {
 
 async function runWithReconnect(): Promise<void> {
     const rabbitUrl = buildRabbitMqUrl();
+    console.log("Notifications consumer booting...");
 
     while (true) {
         try {
+            console.log("Connecting to RabbitMQ...");
             const conn = await amqp.connect(rabbitUrl);
             console.log("Connected to RabbitMQ:", rabbitUrl);
 

@@ -1,8 +1,11 @@
 import { ConsumeMessage } from "amqplib";
 import { createClient } from "redis";
-import { Transporter } from "../config/Mail";
 
 const REDIS_SET_KEY = "welcome:emails";
+
+function getTransporter(): any {
+    return require("../config/Mail").Transporter;
+}
 
 let redisClient: any = null;
 let redisConnectingPromise: Promise<any> | null = null;
@@ -51,7 +54,7 @@ export default class WelcomeUserConsumer {
         const client = await getRedisClient();
         await client.sAdd(REDIS_SET_KEY, payload.email);
 
-        await Transporter.sendMail({
+        await getTransporter().sendMail({
             from: "contact@good-food.fr",
             to: payload.email,
             subject: "Welcome to Good Food",

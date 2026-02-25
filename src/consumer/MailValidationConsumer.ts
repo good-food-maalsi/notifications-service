@@ -1,5 +1,8 @@
 import { ConsumeMessage } from "amqplib";
-import { Transporter } from "../config/Mail";
+
+function getTransporter(): any {
+    return require("../config/Mail").Transporter;
+}
 
 export default class MailValidationConsumer {
     public queue = "MailValidationQueue";
@@ -36,7 +39,7 @@ export default class MailValidationConsumer {
             },
         };
 
-        Transporter.sendMail(mailOptions, function (error: any, info: any) {
+        getTransporter().sendMail(mailOptions, function (error: any, info: any) {
             console.log("sendMail: sending email...");
             if (error) {
                 console.log(error);
