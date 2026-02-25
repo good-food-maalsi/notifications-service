@@ -19,7 +19,7 @@ spec:
                 - name: scw-registry-secret
             containers:
                 - name: notifications-service
-                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:latest
+                  image: rg.fr-par.scw.cloud/good-food-container-registry/notifications-service:136cd169ae09374384e11359b4e8f5e65c7d5206
                   imagePullPolicy: Always
                   ports:
                       - containerPort: 8080
